@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Carregar os dados do arquivo CSV
-resultados = pd.read_csv('./resultados_random_forest.csv')
+resultados = pd.read_csv('./resultados/resultados_regressao_linear.csv')
 
 # Plotar o gráfico
 plt.figure(figsize=(10, 6))

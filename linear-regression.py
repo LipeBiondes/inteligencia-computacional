@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 # Carregar os dados
@@ -14,8 +14,8 @@ y_treino = dados_2020_2022['pessoas']
 X_teste = dados_2023.drop(['ano', 'pessoas'], axis=1)
 y_teste = dados_2023['pessoas']
 
-# Instanciar e treinar o modelo (Random Forest Regressor, por exemplo)
-modelo = RandomForestRegressor()
+# Instanciar e treinar o modelo (Regressão Linear)
+modelo = LinearRegression()
 modelo.fit(X_treino, y_treino)
 
 # Fazer previsões para o ano de 2023
@@ -29,4 +29,4 @@ print(f"MSE: {mse}")
 resultados = pd.DataFrame({'Previsoes': previsoes, 'Real': y_teste})
 resultados['Erro'] = resultados['Previsoes'] - resultados['Real']
 resultados['Erro Quadrático'] = resultados['Erro'] ** 2
-resultados.to_csv('./resultados/resultados_random_forest.csv', index=False)
+resultados.to_csv('./resultados/resultados_regressao_linear.csv', index=False)
