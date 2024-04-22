@@ -3,18 +3,19 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
 # Carregar os dados
-dados = pd.read_csv('acidentes_por_ano.csv', sep=';', encoding='utf-8')
+dados_2020_2022 = pd.read_csv('./acidentes_2020-2022-ano-mes-dia.csv', sep=',', encoding='utf-8')
+dados_2023 = pd.read_csv('./acidentes_2023-ano-mes-dia.csv', sep=',', encoding='utf-8')
 
 # Dividir os dados em treino (2020-2022) e teste (2023)
-dados_treino = dados[dados['ano'].isin([2020, 2021, 2022])]
-dados_teste = dados[dados['ano'] == 2023]
+dados_treino = dados_2020_2022[dados_2020_2022['ano'].isin([2020, 2021, 2022])]
+dados_teste = dados_2023[dados_2023['ano'] == 2023]
 
 # Dividir os dados de treino em features (X) e target (y)
-X_treino = dados_treino.drop(['ano', 'pessoas'], axis=1)
+X_treino = dados_treino.drop(['id_data', 'ano', 'pessoas'], axis=1)
 y_treino = dados_treino['pessoas']
 
 # Dividir os dados de teste em features (X) e target (y)
-X_teste = dados_teste.drop(['ano', 'pessoas'], axis=1)
+X_teste = dados_teste.drop(['id_data', 'ano', 'pessoas'], axis=1)
 y_teste = dados_teste['pessoas']
 
 # Instanciar e treinar o modelo (Random Forest Regressor, por exemplo)
