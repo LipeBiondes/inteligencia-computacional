@@ -24,3 +24,9 @@ previsoes = modelo.predict(X_teste)
 # Avaliar o modelo
 mse = mean_squared_error(y_teste, previsoes)
 print(f"MSE: {mse}")
+
+# Criar DataFrame com as previsões e o MSE
+resultados = pd.DataFrame({'Previsoes': previsoes, 'Real': y_teste})
+resultados['Erro'] = resultados['Previsoes'] - resultados['Real']
+resultados['Erro Quadrático'] = resultados['Erro'] ** 2
+resultados.to_csv('resultados_random_forest.csv', index=False)
