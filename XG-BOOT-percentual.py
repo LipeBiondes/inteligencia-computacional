@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.neighbors import KNeighborsRegressor
+from xgboost import XGBRegressor
 import matplotlib.pyplot as plt
 
 # Carregar os dados de treinamento
@@ -9,8 +9,8 @@ dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino.csv')
 X_treino = dados_treino[['ano', 'mes', 'dia']]
 y_treino = dados_treino['Acidentes']
 
-# Instanciar e treinar o modelo KNN
-modelo = KNeighborsRegressor(n_neighbors=8)  # Defina o número de vizinhos desejado (n_neighbors)
+# Instanciar e treinar o modelo XGBoost
+modelo = XGBRegressor()
 modelo.fit(X_treino, y_treino)
 
 # Fazer previsões para os dados de teste (ano, mês, dia)
@@ -34,7 +34,7 @@ meses = dados_teste['mes'].unique()
 plt.plot(meses, acertos_por_mes, label='Média de Acertos', marker='o')
 plt.xlabel('Mês')
 plt.ylabel('Porcentagem de Acertos')
-plt.title('Média de Acertos das Previsões de Número de Acidentes por Mês (2023)')
+plt.title('Média de Acertos das Previsões de Número de Acidentes por Mês (2023) - XGBoost')
 plt.legend()
 plt.show()
 

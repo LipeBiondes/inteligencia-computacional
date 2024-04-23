@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.neighbors import KNeighborsRegressor
+from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
 
 # Carregar os dados de treinamento
@@ -9,8 +9,8 @@ dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino.csv')
 X_treino = dados_treino[['ano', 'mes', 'dia']]
 y_treino = dados_treino['Acidentes']
 
-# Instanciar e treinar o modelo KNN
-modelo = KNeighborsRegressor(n_neighbors=8)  # Defina o número de vizinhos desejado (n_neighbors)
+# Instanciar e treinar o modelo de Árvore de Decisão
+modelo = DecisionTreeRegressor(max_depth=8)  # Defina a profundidade máxima da árvore
 modelo.fit(X_treino, y_treino)
 
 # Fazer previsões para os dados de teste (ano, mês, dia)

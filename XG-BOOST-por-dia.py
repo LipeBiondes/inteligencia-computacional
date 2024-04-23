@@ -1,5 +1,7 @@
 import pandas as pd
-from sklearn.neighbors import KNeighborsRegressor
+import numpy as np
+import xgboost as xgb
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 # Carregar os dados de treinamento
@@ -9,14 +11,21 @@ dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino.csv')
 X_treino = dados_treino[['ano', 'mes', 'dia']]
 y_treino = dados_treino['Acidentes']
 
-# Instanciar e treinar o modelo KNN
-modelo = KNeighborsRegressor(n_neighbors=8)  # Defina o número de vizinhos desejado (n_neighbors)
-modelo.fit(X_treino, y_treino)
+# Normalizar os dados
+scaler = StandardScaler()
+X_treino_scaled = scaler.fit_transform(X_treino)
+
+# Construir o modelo XGBoost
+model = xgb.XGBRegressor()
+
+# Treinar o modelo
+model.fit(X_treino_scaled, y_treino)
 
 # Fazer previsões para os dados de teste (ano, mês, dia)
 dados_teste = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_teste.csv')
 X_teste = dados_teste[['ano', 'mes', 'dia']]
-previsoes = modelo.predict(X_teste)
+X_teste_scaled = scaler.transform(X_teste)  # Normalizar os dados de teste
+previsoes = model.predict(X_teste_scaled)
 
 # Adicionar as previsões ao DataFrame de teste
 dados_teste['Previsoes'] = previsoes

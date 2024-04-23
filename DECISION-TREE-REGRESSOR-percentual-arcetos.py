@@ -6,16 +6,16 @@ import matplotlib.pyplot as plt
 dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino.csv')
 
 # Separar as features (X) e o target (y) para treinamento
-X_treino = dados_treino[['ano', 'mes', 'dia']]
+X_treino = dados_treino[['ano', 'mes']]
 y_treino = dados_treino['Acidentes']
 
 # Instanciar e treinar o modelo KNN
 modelo = KNeighborsRegressor(n_neighbors=8)  # Defina o número de vizinhos desejado (n_neighbors)
 modelo.fit(X_treino, y_treino)
 
-# Fazer previsões para os dados de teste (ano, mês, dia)
+# Fazer previsões para os dados de teste (ano, mês)
 dados_teste = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_teste.csv')
-X_teste = dados_teste[['ano', 'mes', 'dia']]
+X_teste = dados_teste[['ano', 'mes']]
 previsoes = modelo.predict(X_teste)
 
 # Adicionar as previsões ao DataFrame de teste
