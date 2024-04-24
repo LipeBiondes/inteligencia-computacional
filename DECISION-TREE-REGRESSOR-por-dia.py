@@ -1,9 +1,10 @@
 import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 # Carregar os dados de treinamento
-dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino.csv')
+dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino11.csv')
 
 # Separar as features (X) e o target (y) para treinamento
 X_treino = dados_treino[['ano', 'mes', 'dia']]
@@ -14,7 +15,7 @@ modelo = DecisionTreeRegressor(max_depth=8)  # Defina a profundidade máxima da 
 modelo.fit(X_treino, y_treino)
 
 # Fazer previsões para os dados de teste (ano, mês, dia)
-dados_teste = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_teste.csv')
+dados_teste = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_teste11.csv')
 X_teste = dados_teste[['ano', 'mes', 'dia']]
 previsoes = modelo.predict(X_teste)
 
@@ -26,6 +27,21 @@ dados_reais_agrupados = dados_teste.groupby('mes')['Acidentes'].sum().reset_inde
 
 # Agrupar as previsões por mês
 previsoes_agrupadas = dados_teste.groupby('mes')['Previsoes'].sum().reset_index()
+
+# Calcular R²
+r2 = r2_score(dados_teste['Acidentes'], previsoes)
+
+# Calcular RMSE
+rmse = mean_squared_error(dados_teste['Acidentes'], previsoes, squared=False)
+
+# Calcular MAE
+mae = mean_absolute_error(dados_teste['Acidentes'], previsoes)
+
+# Exibir os resultados
+print("R²:", r2)
+print("RMSE:", rmse)
+print("MAE:", mae)
+
 
 # Plotar o gráfico com os resultados
 plt.plot(dados_reais_agrupados['mes'], dados_reais_agrupados['Acidentes'], label='Dados Reais', marker='o')

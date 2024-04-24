@@ -3,7 +3,7 @@ from sklearn.neighbors import KNeighborsRegressor
 import matplotlib.pyplot as plt
 
 # Carregar os dados de treinamento
-dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino.csv')
+dados_treino = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_treino11.csv')
 
 # Separar as features (X) e o target (y) para treinamento
 X_treino = dados_treino[['ano', 'mes']]
@@ -14,7 +14,7 @@ modelo = KNeighborsRegressor(n_neighbors=8)  # Defina o número de vizinhos dese
 modelo.fit(X_treino, y_treino)
 
 # Fazer previsões para os dados de teste (ano, mês)
-dados_teste = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_teste.csv')
+dados_teste = pd.read_csv('./planilhas/acidentes_por_ano_mes_dia_teste11.csv')
 X_teste = dados_teste[['ano', 'mes']]
 previsoes = modelo.predict(X_teste)
 
